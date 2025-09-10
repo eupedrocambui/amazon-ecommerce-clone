@@ -21,3 +21,15 @@ export function addToCart(productId, selectQuantity, matchingItem) {
       });
     }
 }
+
+export function removeFromCart(productId) {
+  let newCart = [];
+
+  cart.forEach((cartItem) => {
+    if (cartItem.productId !== productId) {
+      newCart.push(cartItem);
+    }
+  
+  cart = newCart;
+  })
+}
