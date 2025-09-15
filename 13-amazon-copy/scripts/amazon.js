@@ -1,13 +1,14 @@
 // imports
-import { cart, addToCart } from '../data/cart.js';
+import { addToCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+import { calculateCartQuantity } from '../data/cart.js';
 
 // global variables
 let timeoutId;
 
 // functions
-function addedElemAnimation(productId) {
+function addedElemAnimation(productId) { // green 'added' element animation when clicking 'add to cart'
   let addedElem = document.querySelector(`.js-added-${productId}`);
     addedElem.classList.add('opacity');
     if (timeoutId) {
@@ -16,16 +17,17 @@ function addedElemAnimation(productId) {
     timeoutId = setTimeout(() => addedElem.classList.remove('opacity'), 2000);
 }
 
-function getSelectQuantity(productId) {
+function getSelectQuantity(productId) { // returns the quantity on the current select element that is being used
   return Number(document.querySelector(`.js-select-${productId}`).value);
 }
 
-function updateCartQuantity(cartQuantity) {
-  cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+function updateCartQuantity() { // updates the cart quantity at the main page
+  let cartQuantity = calculateCartQuantity();
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
+
+// display cart quantity at main page as the page is started
+updateCartQuantity();
 
 // generate the website HTML (products)
 let productsHTML = '';
@@ -98,9 +100,8 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     let matchingItem;
     addToCart(productId, selectQuantity, matchingItem);
     
-    // update cart quantity 
+    // update cart quantity (main page)
     let cartQuantity = 0;
     updateCartQuantity(cartQuantity);
-
   });
 });

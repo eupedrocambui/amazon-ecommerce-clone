@@ -1,16 +1,36 @@
-export let cart = JSON.parse(localStorage.getItem('cart')) ||
-[{
-  productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-  quantity: 2
-}, {
-  productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-  quantity: 1
-}];
+// cart variable (loaded using localStorage or an empty array)
+export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+export function updateItemQuantity(productId, newQuantity) {
+  cart.forEach((item) => {
+    if (item.productId === productId) {
+      item.quantity = newQuantity;
+      saveToStorage();
+    }
+  })
+}
+
+// returns the current total cart quantity
+export function calculateCartQuantity() { 
+  let cartQuantity = 0;
+  cart.forEach((item) => {
+      cartQuantity += item.quantity;
+    });
+  return cartQuantity;
+}
+
+// updates the current cart quantity at the header on checkout page
+export function updateHeaderCheckoutCartQuantity() { 
+    let cartQuantityHeader = calculateCartQuantity();
+    document.querySelector('.js-header-cart-quantity').innerHTML = `${cartQuantityHeader} Items`;
+}
+
+// local function to save the cart using localStorage
 function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
+// add to cart function
 export function addToCart(productId, selectQuantity, matchingItem) {
   cart.forEach((item) => { 
       if (productId === item.productId) { // matching item verifier
@@ -29,6 +49,7 @@ export function addToCart(productId, selectQuantity, matchingItem) {
   saveToStorage();
 }
 
+// remove from cart function
 export function removeFromCart(productId) {
   let newCart = [];
 
