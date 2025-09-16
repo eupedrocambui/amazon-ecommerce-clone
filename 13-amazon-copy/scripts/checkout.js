@@ -3,6 +3,9 @@ import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import { updateHeaderCheckoutCartQuantity } from '../data/cart.js';
 
+console.log(dayjs().add(7, 'days'));
+console.log(dayjs().format('dddd, MMMM D'));
+
 // display header checkout cart quantity as the page is started
 updateHeaderCheckoutCartQuantity();
 
