@@ -1,6 +1,15 @@
 // cart variable (loaded using localStorage or an empty array)
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+/* Default cart for testing 
+export let cart = [{deliveryOptionId: "1",
+productId: "id1",
+quantity: 1
+}, {deliveryOptionId: "2",
+productId: "id2",
+quantity: 3
+}];*/
+
 export function updateItemQuantity(productId, newQuantity) {
   cart.forEach((item) => {
     if (item.productId === productId) {
@@ -42,7 +51,8 @@ export function addToCart(productId, selectQuantity, matchingItem) {
   } else { // if there is not matching item
     cart.push({
       productId: productId,
-      quantity: selectQuantity
+      quantity: selectQuantity,
+      deliveryOptionId: '1'
     });
   }
 
