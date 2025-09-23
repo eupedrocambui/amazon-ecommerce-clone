@@ -5,8 +5,6 @@ import { updateHeaderCheckoutCartQuantity } from '../../data/cart.js';
 import { deliveryOptions } from '../../data/deliveryOptions.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 
-console.log(cart);
-
 export function renderOrderSummary() {
 
     // generates the cart html at checkout page
@@ -117,7 +115,6 @@ export function renderOrderSummary() {
         </div>`;
         })
 
-        console.log(deliverySumary);
         return deliverySumary;
     }
 
