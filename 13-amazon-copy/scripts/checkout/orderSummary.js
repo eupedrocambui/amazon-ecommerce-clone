@@ -1,13 +1,11 @@
 import { cart, removeFromCart, updateDeliveryOption, updateItemQuantity } from '../../data/cart.js'; 
 import { products } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
-import { updateHeaderCheckoutCartQuantity } from '../../data/cart.js';
-import { deliveryOptions } from '../../data/deliveryOptions.js';
-import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import { calculateDeliveryDate, deliveryOptions } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 
 export function renderOrderSummary() {
-
     // generates the cart html at checkout page
     let cartSummaryHTML = '';
     cart.forEach((cartItem) => {
@@ -29,12 +27,8 @@ export function renderOrderSummary() {
             }
         })
 
-        let today = dayjs();
-        let deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-        let dateString = deliveryDate.format('dddd, MMMM D');
-
-
-
+        let dateString = calculateDeliveryDate(deliveryOption);
+        
         cartSummaryHTML += 
         `
         <div class="cart-item-container js-cart-item-container-${matchingItem.id}">
@@ -86,34 +80,32 @@ export function renderOrderSummary() {
         let deliverySumary = '';
 
         deliveryOptions.forEach((deliveryOption) => {
-        let today = dayjs();
-        let deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-        let dateString = deliveryDate.format('dddd, MMMM D');
+            let dateString = calculateDeliveryDate(deliveryOption);
 
-        let deliveryPrice;
-        if (deliveryOption.priceCents === 0) {
-            deliveryPrice = 'FREE';
-        } else {
-            deliveryPrice = formatCurrency(deliveryOption.priceCents);
-        }
-        
-        let isChecked = deliveryOption.id === cartItem.deliveryOptionId;
+            let deliveryPrice;
+            if (deliveryOption.priceCents === 0) {
+                deliveryPrice = 'FREE';
+            } else {
+                deliveryPrice = formatCurrency(deliveryOption.priceCents);
+            }
+            
+            let isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
-        deliverySumary += 
-        `<div class="delivery-option js-delivery-option" data-product-id="${matchingItem.id}" data-delivery-option-id="${deliveryOption.id}">
-            <input type="radio"
-            ${isChecked ? 'checked' : ''}
-            class="delivery-option-input"
-            name="delivery-option-${matchingItem.id}">
-            <div>
-            <div class="delivery-option-date">
-                ${dateString}
-            </div>
-            <div class="delivery-option-price">
-                $${deliveryPrice} - Shipping
-            </div>
-            </div>
-        </div>`;
+            deliverySumary += 
+            `<div class="delivery-option js-delivery-option" data-product-id="${matchingItem.id}" data-delivery-option-id="${deliveryOption.id}">
+                <input type="radio"
+                ${isChecked ? 'checked' : ''}
+                class="delivery-option-input"
+                name="delivery-option-${matchingItem.id}">
+                <div>
+                <div class="delivery-option-date">
+                    ${dateString}
+                </div>
+                <div class="delivery-option-price">
+                    $${deliveryPrice} - Shipping
+                </div>
+                </div>
+            </div>`;
         })
 
         return deliverySumary;
@@ -129,9 +121,8 @@ export function renderOrderSummary() {
         link.addEventListener('click', () => {
             let productId = link.dataset.productId;
             removeFromCart(productId);
-            let container = document.querySelector(`.js-cart-item-container-${productId}`);
-            container.remove();
-            updateHeaderCheckoutCartQuantity();
+            renderOrderSummary();
+            renderCheckoutHeader();
             renderPaymentSummary();
         })
     });
@@ -158,7 +149,9 @@ export function renderOrderSummary() {
                 if (newQuantity > 0 && newQuantity < 1000) {
                     let quantityLabelElem = document.querySelector('.quantity-label');
                     updateItemQuantity(productId, newQuantity); // updates the cart item quantity
-                    updateHeaderCheckoutCartQuantity();
+                    renderCheckoutHeader();
+                    renderOrderSummary(); 
+                    renderPaymentSummary(); 
                     quantityLabelElem.innerHTML = newQuantity;
 
                     // display the update link again and dessapears the input and save elements
@@ -178,7 +171,7 @@ export function renderOrderSummary() {
                     if (newQuantity > 0 && newQuantity < 1000) {
                         let quantityLabelElem = document.querySelector('.quantity-label');
                         updateItemQuantity(productId, newQuantity);
-                        updateHeaderCheckoutCartQuantity();
+                        renderCheckoutHeader();
                         quantityLabelElem.innerHTML = newQuantity;
                         link.innerHTML = 'Update';
                         document.querySelector('.js-input-quantity-update').innerHTML = '';
@@ -190,8 +183,8 @@ export function renderOrderSummary() {
             })
         })
     })
-
-
+    
+    // addEventListeners for all delivery options (radio inputs)
     document.querySelectorAll('.js-delivery-option').forEach((element) => {
         element.addEventListener('click', () => {
             let productId = element.dataset.productId;

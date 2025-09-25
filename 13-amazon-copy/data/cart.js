@@ -73,7 +73,7 @@ export function removeFromCart(productId) {
   saveToStorage();
 }
 
-//
+// changes the delivery option in checkout (radio input)
 export function updateDeliveryOption(productId, deliveryOptionId) {
   let matchingItem;
   cart.forEach((item) => { 
