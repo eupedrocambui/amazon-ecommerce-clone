@@ -1,6 +1,3 @@
-// cart variable (loaded using localStorage or an empty array)
-export let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
 /* Default cart for testing 
 export let cart = [{deliveryOptionId: "1",
 productId: "id1",
@@ -9,6 +6,15 @@ quantity: 1
 productId: "id2",
 quantity: 3
 }];*/
+
+export let cart;
+
+loadFromStorage();
+
+// function of cart variable (loaded using localStorage or an empty array)
+export function loadFromStorage() {
+  cart = JSON.parse(localStorage.getItem('cart')) || [];
+}
 
 export function updateItemQuantity(productId, newQuantity) {
   cart.forEach((item) => {
