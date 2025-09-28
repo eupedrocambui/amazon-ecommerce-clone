@@ -31,7 +31,9 @@ export function renderOrderSummary() {
         
         cartSummaryHTML += 
         `
-        <div class="cart-item-container js-cart-item-container-${matchingItem.id}">
+        <div class="cart-item-container
+        js-cart-item-container
+        js-cart-item-container-${matchingItem.id}">
             <div class="delivery-date">
                 Delivery date: ${dateString}
             </div>
@@ -47,7 +49,7 @@ export function renderOrderSummary() {
                 <div class="product-price">
                     $${formatCurrency(matchingItem.priceCents)}
                 </div>
-                <div class="product-quantity">
+                <div class="product-quantity js-product-quantity-${matchingItem.id}">
                     <span>
                     Quantity: <span class="quantity-label">${cartItem.quantity}</span>
                     </span>
@@ -58,7 +60,9 @@ export function renderOrderSummary() {
                     <span class="js-input-quantity-update"></span>
                     <span class="js-link-save-update"></span> 
 
-                    <span class="delete-quantity-link link-primary js-delete-button" data-product-id="${matchingItem.id}">
+                    <span class="delete-quantity-link link-primary 
+                    js-delete-button js-delete-button-${matchingItem.id}" 
+                    data-product-id="${matchingItem.id}">
                     Delete
                     </span>
                 </div>
