@@ -43,10 +43,10 @@ export function renderOrderSummary() {
                 src="${matchingItem.image}">
 
                 <div class="cart-item-details">
-                <div class="product-name">
+                <div class="product-name js-product-name-${matchingItem.id}">
                     ${matchingItem.name}
                 </div>
-                <div class="product-price">
+                <div class="product-price js-product-price-${matchingItem.id}">
                     $${formatCurrency(matchingItem.priceCents)}
                 </div>
                 <div class="product-quantity js-product-quantity-${matchingItem.id}">
@@ -96,10 +96,10 @@ export function renderOrderSummary() {
             let isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
             deliverySumary += 
-            `<div class="delivery-option js-delivery-option" data-product-id="${matchingItem.id}" data-delivery-option-id="${deliveryOption.id}">
+            `<div class="delivery-option js-delivery-option js-delivery-${matchingItem.id}-${deliveryOption.id}" data-product-id="${matchingItem.id}" data-delivery-option-id="${deliveryOption.id}">
                 <input type="radio"
                 ${isChecked ? 'checked' : ''}
-                class="delivery-option-input"
+                class="delivery-option-input js-input-${matchingItem.id}-${deliveryOption.id}"
                 name="delivery-option-${matchingItem.id}">
                 <div>
                 <div class="delivery-option-date">

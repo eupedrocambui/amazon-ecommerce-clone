@@ -81,6 +81,17 @@ export function removeFromCart(productId) {
 
 // changes the delivery option in checkout (radio input)
 export function updateDeliveryOption(productId, deliveryOptionId) {
+  // verify if productId is not in the cart (the function will return)
+  let counter = 0;
+  cart.forEach((item) => {
+    if (productId !== item.productId) {
+        counter++;
+      }
+  });
+  if (counter === cart.length) {
+    return
+  }
+
   let matchingItem;
   cart.forEach((item) => { 
       if (productId === item.productId) { // matching item verifier
