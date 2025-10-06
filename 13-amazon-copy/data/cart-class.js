@@ -9,21 +9,21 @@ quantity: 3
 
 class Cart {
     cartItems;
-    localStorageKey;
+    #localStorageKey;
 
     constructor(localStorageKey) {
-        this.localStorageKey = localStorageKey;
-        this.loadFromStorage;
+        this.#localStorageKey = localStorageKey;
+        this.#loadFromStorage;
     }
 
     // function of cart variable (loaded using localStorage or an empty array)
-    loadFromStorage() {
-      this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)) || [];
+    #loadFromStorage() {
+      this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [];
     }
 
     // local function to save the cart using localStorage
     saveToStorage() {
-      localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+      localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
     }
 
     // add to cart function
