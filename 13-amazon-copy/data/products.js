@@ -1,6 +1,6 @@
 import { formatCurrency } from "../scripts/utils/money.js";
 
-class Product {
+export class Product {
   id;
   image;
   name;
@@ -28,12 +28,14 @@ class Product {
   }
 }
 
-class Clothing extends Product {
+export class Clothing extends Product {
   sizeChartLink;
+  type;
 
   constructor(productDetails) {
     super(productDetails);
     this.sizeChartLink = productDetails.sizeChartLink;
+    this.type = productDetails.type;
   }
 
   extraInfoHTML() {
@@ -41,8 +43,25 @@ class Clothing extends Product {
   }
 }
 
-const date = new Date();
-console.log(date.toLocaleDateString());
+export class Appliance extends Product {
+  instructionsLink;
+  warrantyLink;
+  type;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.instructionsLink = productDetails.instructionsLink;
+    this.warrantyLink = productDetails.warrantyLink;
+    this.type = productDetails.type;
+  }
+
+  extraInfoHTML() {
+    return `
+    <a href="${this.instructionsLink}" target="_blank">Instructions</a> 
+    <a href="${this.warrantyLink}" target="_blank">Warranty</a>
+    `;
+  }
+}
 
 export const products = [
   {
@@ -124,6 +143,9 @@ export const products = [
     id: "54e0eccd-8f36-462b-b68a-8182611d9add",
     image: "images/products/black-2-slot-toaster.jpg",
     name: "2 Slot Toaster - Black",
+    type: 'appliance',
+    instructionsLink: '../images/appliance-instructions.png',
+    warrantyLink: '../images/appliance-warranty.png',
     rating: {
       stars: 5,
       count: 2197
@@ -309,6 +331,9 @@ export const products = [
     id: "c2a82c5e-aff4-435f-9975-517cfaba2ece",
     image: "images/products/electric-glass-and-steel-hot-water-kettle.webp",
     name: "Electric Glass and Steel Hot Tea Water Kettle - 1.7-Liter",
+    type: 'appliance',
+    instructionsLink: '../images/appliance-instructions.png',
+    warrantyLink: '../images/appliance-warranty.png',
     rating: {
       stars: 5,
       count: 846
@@ -735,6 +760,8 @@ export const products = [
 ].map((productDetails) => {
   if (productDetails.type === 'clothing') {
     return new Clothing(productDetails);
+  } else if (productDetails.type === 'appliance') {
+    return new Appliance(productDetails);
   }
   return new Product(productDetails);
 });
