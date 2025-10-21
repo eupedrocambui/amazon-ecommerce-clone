@@ -4,14 +4,11 @@ import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 
-Promise.all([
-    loadProductsFetch(),
-    new Promise((resolve) => {
+async function loadPage() {
+    await loadProductsFetch();
+    await new Promise((resolve) => {
         loadCart(resolve);
-    })
-]).then((values) => {
-    console.log(values);
-
+    });
     // display header checkout cart quantity as the page is started
     renderCheckoutHeader();
 
@@ -20,11 +17,18 @@ Promise.all([
 
     // renders the order summary (payment)
     renderPaymentSummary();
-})
+}
 
-/*new Promise((resolve) => {
-    loadProducts(resolve);
-}).then(() => {
+loadPage();
+
+/*Promise.all([
+    loadProductsFetch(),
+    new Promise((resolve) => {
+        loadCart(resolve);
+    })
+]).then((values) => {
+    console.log(values);
+
     // display header checkout cart quantity as the page is started
     renderCheckoutHeader();
 
