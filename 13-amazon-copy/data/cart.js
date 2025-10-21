@@ -103,3 +103,10 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 
   saveToStorage();
 }
+
+export function loadCart(fun) {
+  fetch('https://supersimplebackend.dev/cart').then((response) => {
+    console.log(response);
+  })
+  fun();
+}
