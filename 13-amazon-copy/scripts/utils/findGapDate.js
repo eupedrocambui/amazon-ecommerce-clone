@@ -1,3 +1,4 @@
+// finds the gap (in days) between two dates (YYYY-MM-DD format for both)
 export function findGap(orderTime, expectedDelivery) {
     //order time (YYYY-MM-DD) -> date1 
     //expected (YYYY-MM-DD) -> date 2

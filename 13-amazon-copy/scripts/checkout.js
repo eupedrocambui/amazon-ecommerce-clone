@@ -10,13 +10,13 @@ async function loadPage() {
         loadCartFetch()
     ]);
     
-    // display header checkout cart quantity as the page is started
+    // displays header checkout cart quantity when the page is started
     renderCheckoutHeader();
 
-    // renders the order summary (items), generates all HTML
+    // renders order summary (items in checkout page)
     renderOrderSummary();
 
-    // renders the order summary (payment)
+    // renders the order summary (payment section in checkout)
     renderPaymentSummary();
 }
 

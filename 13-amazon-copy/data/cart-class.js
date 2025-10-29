@@ -1,3 +1,6 @@
+// Practicing Classes
+
+
 /* Default cart for testing 
 export let cart = [{deliveryOptionId: "1",
 productId: "id1",

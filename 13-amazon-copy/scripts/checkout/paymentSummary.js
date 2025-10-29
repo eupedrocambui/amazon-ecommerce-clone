@@ -4,7 +4,7 @@ import { addOrder } from "../../data/orders.js";
 import { products } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 
-
+// renders the order summary (payment section in checkout)
 export function renderPaymentSummary() {
     let productPriceCents = 0;
     let shippingPriceCents = 0;
@@ -94,6 +94,5 @@ export function renderPaymentSummary() {
       }
 
       window.location.href = 'orders.html';
-
     });
 }

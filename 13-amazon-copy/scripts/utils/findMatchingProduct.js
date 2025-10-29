@@ -1,3 +1,4 @@
+// finds the matching product (all product data) in products array using a productId
 export function findMatchingProduct(productId, products) {
     let matchingProduct;
 

@@ -5,8 +5,8 @@ import { calculateDeliveryDate, deliveryOptions } from '../../data/deliveryOptio
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
 
+// renders order summary (items in checkout page)
 export function renderOrderSummary() {
-    // generates the cart html at checkout page
     let cartSummaryHTML = '';
     cart.forEach((cartItem) => {
         let productId = cartItem.productId; // cart product id
@@ -114,8 +114,6 @@ export function renderOrderSummary() {
 
         return deliverySumary;
     }
-
-
 
     // display the cart html at checkout page
     document.querySelector('.js-summary').innerHTML = cartSummaryHTML;

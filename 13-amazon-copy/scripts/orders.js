@@ -7,7 +7,7 @@ import { findMatchingProduct } from "./utils/findMatchingProduct.js";
 import { formatDate, formatDate2, formatDate3 } from "./utils/formatDate.js";
 import { formatCurrency } from "./utils/money.js";
 
-
+// generates orders products HTML
 async function getProductsGridHTML(orderProducts) {
         let productsGridHtml = '';
         await loadProductsFetch();
@@ -63,6 +63,7 @@ async function getProductsGridHTML(orderProducts) {
         return productsGridHtml;
 }
 
+// generates order page HTML
 async function renderOrdersHTML() {
     let ordersSummaryHTML = '';
 

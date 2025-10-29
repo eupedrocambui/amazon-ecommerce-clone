@@ -1,3 +1,5 @@
+// Practicing OOP
+
 /* Default cart for testing 
 export let cart = [{deliveryOptionId: "1",
 productId: "id1",
@@ -6,7 +8,6 @@ quantity: 1
 productId: "id2",
 quantity: 3
 }];*/
-
 
 function Cart(localStorageKey) {
   const cart = {

@@ -1,6 +1,6 @@
 import { calculateCartQuantity } from "../../data/cart.js";
-// js-checkout-header-middle-section
 
+// displays header checkout cart quantity when the page is started
 export function renderCheckoutHeader() {
     let cartQuantity = calculateCartQuantity();
     let checkoutHeaderHTML = 
