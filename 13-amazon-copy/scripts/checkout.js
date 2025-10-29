@@ -21,21 +21,3 @@ async function loadPage() {
 }
 
 loadPage();
-
-/*Promise.all([
-    loadProductsFetch(),
-    new Promise((resolve) => {
-        loadCart(resolve);
-    })
-]).then((values) => {
-    console.log(values);
-
-    // display header checkout cart quantity as the page is started
-    renderCheckoutHeader();
-
-    // renders the order summary (items), generates all HTML
-    renderOrderSummary();
-
-    // renders the order summary (payment)
-    renderPaymentSummary();
-})*/

@@ -86,9 +86,11 @@ export function renderPaymentSummary() {
 
         const order = await response.json();
         addOrder(order);
+        localStorage.removeItem('cart');
+        localStorage.setItem('cart', '[]');
 
       } catch (error) {
-        console.log('catch error (place your order button)');
+        console.log('catch error (place your order button)', error);
       }
 
       window.location.href = 'orders.html';
