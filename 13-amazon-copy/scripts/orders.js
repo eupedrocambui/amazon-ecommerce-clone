@@ -1,10 +1,11 @@
 import { addToCart, calculateCartQuantity } from "../data/cart.js";
 import { orders } from "../data/orders.js";
 import { loadProductsFetch, products } from "../data/products.js";
+import { calculateProgressPercent, getTodayDate } from "./tracking.js";
 import { addBusinessDays } from "./utils/addBusinessDays.js";
 import { findGap } from "./utils/findGapDate.js";
 import { findMatchingProduct } from "./utils/findMatchingProduct.js";
-import { formatDate, formatDate2, formatDate3 } from "./utils/formatDate.js";
+import { formatDate, formatDate2, formatDate3, formatDate4 } from "./utils/formatDate.js";
 import { formatCurrency } from "./utils/money.js";
 
 // refreshes the cart quantity icon in orders page header
@@ -82,13 +83,25 @@ async function renderOrdersHTML() {
 
             const dateGap = findGap(orderTime, estimatedDeliveryTime);
     
-            let deliveryDate = addBusinessDays(orderTime, dateGap);
-            deliveryDate = formatDate3(deliveryDate);
+            const deliveryDate = addBusinessDays(orderTime, dateGap); // 2025-11-12
+            const finalDeliveryDate = formatDate3(deliveryDate); // November, 12
 
             const matchingProduct = findMatchingProduct(productId, products);
 
             const productImageLink = matchingProduct.image;
             const productName = matchingProduct.name;
+
+            // calculating the delivery percent progress
+            const today = getTodayDate();
+            const progressPercent = calculateProgressPercent(
+                today, orderTime, deliveryDate
+            );
+
+            // calculating status (1 0-50% | 2 50-99% | 3 >= 100%)
+            const status = 
+                (progressPercent >= 0 && progressPercent <= 50) ? 1 :
+                (progressPercent > 50 && progressPercent <= 99) ? 2 :
+                status = 3;
 
             productsGridHtml+=
             `
@@ -101,7 +114,7 @@ async function renderOrdersHTML() {
                         ${productName}
                     </div>
                     <div class="product-delivery-date">
-                        Arriving on: ${deliveryDate}
+                        Arriving on: ${finalDeliveryDate}
                     </div>
                     <div class="product-quantity">
                         Quantity: ${quantity}
@@ -119,7 +132,15 @@ async function renderOrdersHTML() {
 
                     <div class="product-actions">
                     <a href="tracking.html">
-                        <button class="track-package-button button-secondary">
+                        <button class="track-package-button button-secondary
+                        js-track-package"
+                        
+                        data-delivery-date="${formatDate4(deliveryDate)}"
+                        data-product-name="${productName}"
+                        data-quantity="${quantity}"
+                        data-image-link="${productImageLink}"
+                        data-status="${status}"
+                        >
                         Track package
                         </button>
                     </a>
@@ -159,6 +180,24 @@ finalHTML().then((response) => {
             addToCart(productId, quantity, matchingItem);
 
             displayCartQuantityOrders();
+        });
+    });
+
+    // Track Package buttons
+    const trackPackageElems = document.querySelectorAll('.js-track-package');
+    trackPackageElems.forEach((trackPackageButton) => {
+        trackPackageButton.addEventListener('click', () => {
+            // gets product data from HTML element
+            const data = {};
+            data.deliveryDate = trackPackageButton.dataset.deliveryDate;
+            data.productName = trackPackageButton.dataset.productName;
+            data.quantity = trackPackageButton.dataset.quantity;
+            data.imageLink = trackPackageButton.dataset.imageLink;
+            data.status = trackPackageButton.dataset.status;
+            
+            // saves at local storage
+            localStorage.setItem('productData', JSON.stringify(data));
+            console.log('1');
         });
     });
 })

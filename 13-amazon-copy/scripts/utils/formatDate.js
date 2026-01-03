@@ -13,3 +13,9 @@ export function formatDate2(originalDate) {
 export function formatDate3(originalDate) {
   return dayjs(originalDate).format('MMMM, D');
 }
+
+// "YYYY-MM-DD" -> "Monday, November 3"
+export function formatDate4(originalDate) {
+  const localDate = dayjs(originalDate + "T00:00:00");
+  return dayjs(localDate).format('dddd, MMMM D');
+}
