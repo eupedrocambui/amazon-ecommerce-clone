@@ -39,8 +39,8 @@ async function renderOrdersHTML() {
         const orderTime = formatDate(order.orderTime);
         const totalCostCents = order.totalCostCents;
         const orderProducts = order.products;
-       
-        const productsHTML = await getProductsGridHTML(orderProducts, orderId);
+        
+        const productsHTML = await getProductsGridHTML(orderProducts, orderId, order.orderTime);
        
         ordersSummaryHTML += 
         `
@@ -71,14 +71,17 @@ async function renderOrdersHTML() {
     }
 
     // generates orders products HTML
-    async function getProductsGridHTML(orderProducts, orderId) {
+    async function getProductsGridHTML(orderProducts, orderId, orderTime) {
         let productsGridHtml = '';
         await loadProductsFetch();
-
+        
         orderProducts.forEach((product) => {
             const productId = product.productId;
             const quantity = product.quantity;
-            const orderTime = formatDate2(product.orderTime);
+            
+            // console.log(product.orderTime); undefined
+            //const orderTime = formatDate2(product.orderTime);
+            // console.log(orderTime); dia atual
             const estimatedDeliveryTime = formatDate2(product.estimatedDeliveryTime);
 
             const dateGap = findGap(orderTime, estimatedDeliveryTime);

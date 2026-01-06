@@ -84,7 +84,16 @@ export function renderPaymentSummary() {
           })
         });
 
-        const order = await response.json();
+        // Order API request
+        let order = await response.json();
+
+        // Changing orderTime timezone to Brazil
+        order.orderTime = dayjs(order.orderTime).tz("America/Sao_Paulo");
+
+        // Changing orderTime format (YYYY-MM-DD)
+        order.orderTime = dayjs(order.orderTime).format("YYYY-MM-DD");
+        
+        // Adding the order and cleaning the cart
         addOrder(order);
         localStorage.removeItem('cart');
         localStorage.setItem('cart', '[]');
