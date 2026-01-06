@@ -1,7 +1,7 @@
 import { addToCart, calculateCartQuantity } from "../data/cart.js";
 import { orders } from "../data/orders.js";
 import { loadProductsFetch, products } from "../data/products.js";
-import { calculateProgressPercent, getTodayDate } from "./tracking.js";
+import { calculateProgressPercent, getTodayDate } from "./utils/trackingUtils.js";
 import { addBusinessDays } from "./utils/addBusinessDays.js";
 import { findGap } from "./utils/findGapDate.js";
 import { findMatchingProduct } from "./utils/findMatchingProduct.js";
@@ -97,7 +97,7 @@ async function renderOrdersHTML() {
                 today, orderTime, deliveryDate
             );
 
-            // calculating status (1 0-50% | 2 50-99% | 3 >= 100%)
+            // calculating status (1 0-50% | 2 50-99% | 3 100%)
             const status = 
                 (progressPercent >= 0 && progressPercent <= 50) ? 1 :
                 (progressPercent > 50 && progressPercent <= 99) ? 2 :
@@ -139,6 +139,7 @@ async function renderOrdersHTML() {
                         data-product-name="${productName}"
                         data-quantity="${quantity}"
                         data-image-link="${productImageLink}"
+                        data-progress-percent="${progressPercent}"
                         data-status="${status}"
                         >
                         Track package
@@ -193,11 +194,11 @@ finalHTML().then((response) => {
             data.productName = trackPackageButton.dataset.productName;
             data.quantity = trackPackageButton.dataset.quantity;
             data.imageLink = trackPackageButton.dataset.imageLink;
+            data.progressPercent = trackPackageButton.dataset.progressPercent;
             data.status = trackPackageButton.dataset.status;
             
             // saves at local storage
             localStorage.setItem('productData', JSON.stringify(data));
-            console.log('1');
         });
     });
 })
