@@ -69,6 +69,7 @@ export function loadProductsFetch() {
   const promise = fetch('https://supersimplebackend.dev/products').then((response) => {
     return response.json();
   }).then((productDetails) => {
+    console.log(productDetails);
     products = productDetails.map((productDetails) => {
     if (productDetails.type === 'clothing') {
       return new Clothing(productDetails);

@@ -112,3 +112,19 @@ function renderProductsGrid() {
     });
   });
 }
+
+
+
+// Search button event listener
+const searchButtonElem = document.querySelector('.search-button');
+
+searchButtonElem.addEventListener('click', () => {
+  const searchBarElem = document.querySelector('.search-bar');
+  const searchBarValue = searchBarElem.value;
+
+  const params = new URLSearchParams({
+    search: searchBarValue
+  })
+
+  window.location.href = `amazon.html?${params.toString()}`;
+});
