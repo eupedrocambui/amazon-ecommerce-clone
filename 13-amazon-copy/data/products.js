@@ -86,38 +86,6 @@ export function loadProductsFetch() {
   return promise;
 }
 
-/* loadProductsFetch().then(() => {
-  console.log('next step');
-}); */
-
-export function loadProducts(fun) {
-  const xhr = new XMLHttpRequest();
-
-  xhr.addEventListener('load', () => {
-  const data = JSON.parse(xhr.response);
-
-  products = data.map((productDetails) => {
-    if (productDetails.type === 'clothing') {
-      return new Clothing(productDetails);
-    } else if (productDetails.type === 'appliance') {
-      return new Appliance(productDetails);
-    } else {
-      return new Product(productDetails);
-    }
-  });
-
-  console.log('load products');
-
-  if (typeof fun === 'function') {
-    fun();
-  } else {
-    console.warn('Parametro fun não é uma função:', fun);
-  }
-});
-
-xhr.open('GET', 'https://supersimplebackend.dev/products');
-xhr.send();
-}
 
 /*export const products = [
   {

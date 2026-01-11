@@ -1,6 +1,6 @@
 // imports
 import { addToCart } from '../data/cart.js';
-import { products, loadProducts } from '../data/products.js';
+import { products, loadProductsFetch } from '../data/products.js';
 import { calculateCartQuantity } from '../data/cart.js';
 
 // global variables
@@ -29,7 +29,8 @@ function updateCartQuantity() { // updates the cart quantity at the main page
 updateCartQuantity();
 
 // generate the website HTML (products)
-loadProducts(renderProductsGrid);
+await loadProductsFetch();
+renderProductsGrid();
 
 function renderProductsGrid() {
   let productsHTML = '';
