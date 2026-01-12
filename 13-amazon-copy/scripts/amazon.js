@@ -116,11 +116,12 @@ function renderProductsGrid() {
 
 
 
-// Search button event listener
+// Search bar elements
 const searchButtonElem = document.querySelector('.search-button');
+const searchBarElem = document.querySelector('.search-bar');
 
+// Search button click event listener
 searchButtonElem.addEventListener('click', () => {
-  const searchBarElem = document.querySelector('.search-bar');
   const searchBarValue = searchBarElem.value;
 
   const params = new URLSearchParams({
@@ -128,4 +129,11 @@ searchButtonElem.addEventListener('click', () => {
   })
 
   window.location.href = `amazon.html?${params.toString()}`;
+});
+
+// Search bar enter keydown event listener
+searchBarElem.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    searchButtonElem.click();
+  }
 });
