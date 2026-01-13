@@ -33,6 +33,20 @@ await loadProductsFetch();
 renderProductsGrid();
 
 function renderProductsGrid() {
+  // checking if zero products were found (not found message)
+  if (products.length === 0) {
+    const productsGridElem = document.querySelector('.products-grid');
+    productsGridElem.innerHTML =
+    ` <div class="not-found-container">
+        <h1>No results found for your search</h1>
+        <p>Try checking the spelling or using more general terms</p>
+        <a href="amazon.html">Return to Home Page</a>
+      </div>
+    `;
+    productsGridElem.style.display = "block"
+    return;
+  }
+
   let productsHTML = '';
   products.forEach((product) => {
       let html = `
