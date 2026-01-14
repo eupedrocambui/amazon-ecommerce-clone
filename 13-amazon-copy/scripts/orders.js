@@ -99,12 +99,12 @@ async function renderOrdersHTML() {
             const progressPercent = calculateProgressPercent(
                 today, orderTime, deliveryDate
             );
-
-            // calculating status (1 0-50% | 2 50-99% | 3 100%)
+            
+            // calculating status (1 0-50% | 2 51-99% | 3 >=100%)
             const status = 
                 (progressPercent >= 0 && progressPercent <= 50) ? 1 :
                 (progressPercent > 50 && progressPercent <= 99) ? 2 :
-                status = 3;
+                3;
 
             productsGridHtml+=
             `

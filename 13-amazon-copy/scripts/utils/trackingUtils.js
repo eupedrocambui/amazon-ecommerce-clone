@@ -11,23 +11,23 @@ export function calculateProgressPercent(currentTimeInput, orderTimeInput, deliv
   const currentTime = dayjs(currentTimeInput);
   const orderTime = dayjs(orderTimeInput);
   const deliveryTime = dayjs(deliveryTimeInput);
-  console.log('current time');
+  /*console.log('current time');
   console.log(currentTime);
   console.log('order time');
   console.log(orderTime);
   console.log('delivery time');
-  console.log(deliveryTime);
+  console.log(deliveryTime);*/
 
   // difference (in days) between today and order's day
   const todayToOrderDif = currentTime.diff(orderTime, 'days');
-  console.log(todayToOrderDif); //0
+  //console.log(todayToOrderDif); //0
 
   // difference (in days) between delivery date and order's day
   const deliveryToOrderDif = deliveryTime.diff(orderTime, 'days')
-  console.log(deliveryToOrderDif); //2
+  //console.log(deliveryToOrderDif); //2
 
   // calculates the percentage and rounds it down
   const percentage = ((todayToOrderDif) / (deliveryToOrderDif)) * 100;
-  console.log(percentage); //0
+  //console.log(percentage); //0
   return Math.floor(percentage);
 }
