@@ -21,25 +21,8 @@
     
   </head>
   <body>
-    <div class="checkout-header">
-      <div class="header-content">
-        <div class="checkout-header-left-section">
-          <a href="amazon.html">
-            <img class="amazon-logo" src="images/amazon-logo.png">
-            <img class="amazon-mobile-logo" src="images/amazon-mobile-logo.png">
-          </a>
-        </div>
-
-        <div class="checkout-header-middle-section js-checkout-header-middle-section">
-          Checkout (<a class="return-to-home-link js-header-cart-quantity"
-            href="amazon.html">0 Items</a>) <!-- header cart quantity on checkout page -->
-        </div>
-
-        <div class="checkout-header-right-section">
-          <img src="images/icons/checkout-lock-icon.png">
-        </div>
-      </div>
-    </div>
+    <!-- Header loaded with JS -->
+    <div class="checkout-header"></div>
 
     <div class="main">
       <div class="page-title">Review your order</div>
@@ -59,6 +42,7 @@
       dayjs.extend(window.dayjs_plugin_utc);
       dayjs.extend(window.dayjs_plugin_timezone);
     </script>
+    <script type="module" src="./scripts/shared-scripts/checkout-header.js"></script>
     <script type="module" src="/13-amazon-copy/scripts/checkout.js"></script>
   </body>
 </html>

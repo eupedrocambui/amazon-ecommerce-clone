@@ -1,0 +1,22 @@
+h1 {
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+.footer-content {
+    background-color: #232F3E;
+}
+
+.important-info {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.legal-info {
+    background-color: #131A22;
+}

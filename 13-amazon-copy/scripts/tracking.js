@@ -62,5 +62,7 @@ console.log(progressPercent);
 progressBarElem.style.width = `${progressPercent}%`;
 
 // Refreshing cart quantity
-const cartQuantityTrackingElem = document.querySelector('.cart-quantity');
-cartQuantityTrackingElem.innerHTML = calculateCartQuantity();
+document.addEventListener('headerLoaded', () => {
+  const cartQuantityTrackingElem = document.querySelector('.js-cart-quantity');
+  cartQuantityTrackingElem.innerHTML = calculateCartQuantity();
+});

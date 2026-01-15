@@ -9,9 +9,14 @@ import { formatDate, formatDate2, formatDate3, formatDate4 } from "./utils/forma
 import { formatCurrency } from "./utils/money.js";
 
 // refreshes the cart quantity icon in orders page header
+/*
+    quando estiver refatorando, crie uma unica funcao display
+    cart quantity e reutilize, os dois headers tem a class
+    js-cart-quantity, utilize para montar a funcao unica
+*/
 function displayCartQuantityOrders() {
     const cartQuantityOrdersElem = document.querySelector(
-        '.js-cart-quantity-orders'
+        '.js-cart-quantity'
     );
     cartQuantityOrdersElem.innerHTML = calculateCartQuantity();
 }
