@@ -18,6 +18,11 @@ async function loadPage() {
 
     // renders the order summary (payment section in checkout)
     renderPaymentSummary();
+
+    // dispatch mainLoaded event
+    document.dispatchEvent(new Event('mainLoaded'));
 }
 
 loadPage();
+
+

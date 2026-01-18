@@ -66,3 +66,6 @@ document.addEventListener('headerLoaded', () => {
   const cartQuantityTrackingElem = document.querySelector('.js-cart-quantity');
   cartQuantityTrackingElem.innerHTML = calculateCartQuantity();
 });
+
+// dispatch mainLoaded event
+document.dispatchEvent(new Event('mainLoaded'));

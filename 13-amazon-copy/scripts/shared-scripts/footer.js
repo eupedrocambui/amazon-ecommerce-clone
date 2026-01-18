@@ -1,4 +1,4 @@
-document.addEventListener('productsLoaded', () => {
+document.addEventListener('mainLoaded', () => {
     fetch('../shared-pages/footer.html')
         .then(response => response.text())
         .then(data => {

@@ -103,10 +103,13 @@ function renderProductsGrid() {
       `;
 
       productsHTML += html;
-      console.log(1);
   });
+
+  //
   document.querySelector('.products-grid').innerHTML = productsHTML;
-  console.log(2);
+  
+  // dispatch mainLoaded event
+  document.dispatchEvent(new Event('mainLoaded'));
 
   // addEventListener for all "add to cart" buttons
   document.querySelectorAll('.js-add-to-cart').forEach((button) => {

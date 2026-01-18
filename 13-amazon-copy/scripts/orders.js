@@ -209,4 +209,7 @@ finalHTML().then((response) => {
             localStorage.setItem('productData', JSON.stringify(data));
         });
     });
+
+    // dispatch mainLoaded event
+    document.dispatchEvent(new Event('mainLoaded'));
 })
