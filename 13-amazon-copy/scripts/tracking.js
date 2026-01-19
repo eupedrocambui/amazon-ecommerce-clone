@@ -69,3 +69,30 @@ document.addEventListener('headerLoaded', () => {
 
 // dispatch mainLoaded event
 document.dispatchEvent(new Event('mainLoaded'));
+
+
+
+// Functional search bar after header being loded
+document.addEventListener('headerLoaded', () => {
+    // Search bar elements
+    const searchButtonElem = document.querySelector('.search-button');
+    const searchBarElem = document.querySelector('.search-bar');
+
+    // Search button click event listener
+    searchButtonElem.addEventListener('click', () => {
+    const searchBarValue = searchBarElem.value;
+
+    const params = new URLSearchParams({
+        search: searchBarValue
+    })
+
+    window.location.href = `amazon.html?${params.toString()}`;
+    });
+
+    // Search bar enter keydown event listener
+    searchBarElem.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        searchButtonElem.click();
+    }
+    });
+});
