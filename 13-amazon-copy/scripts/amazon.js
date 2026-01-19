@@ -38,12 +38,17 @@ function renderProductsGrid() {
     const productsGridElem = document.querySelector('.products-grid');
     productsGridElem.innerHTML =
     ` <div class="not-found-container">
-        <h1>No results found for your search</h1>
-        <p>Try checking the spelling or using more general terms</p>
+        <h1>No Results Found for your Search</h1>
+        <p>Try checking the spelling or using more general terms.</p>
         <a href="amazon.html">Return to Home Page</a>
       </div>
     `;
-    productsGridElem.style.display = "block"
+
+    productsGridElem.style.display = "block";
+    
+    // dispatch mainLoaded event
+    document.dispatchEvent(new Event('mainLoaded'));
+    
     return;
   }
 

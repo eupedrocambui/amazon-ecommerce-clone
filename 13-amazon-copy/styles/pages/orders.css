@@ -3,9 +3,10 @@ html, body {
   overflow-x: hidden;
 }
 
+
 .main {
   max-width: 850px;
-  margin-top: 90px;
+  margin-top: 45px;
   margin-bottom: 100px;
   padding-left: 20px;
   padding-right: 20px;
@@ -164,6 +165,24 @@ html, body {
   width: 100%;
   font-size: 15px;
   padding: 8px;
+}
+
+/* no orders placed message */
+.no-orders-container {
+  padding-left: 10px;
+  margin-bottom: 25vh;
+}
+
+.no-orders-container h1 {
+  color: #2e2e2e;
+  font-size: 30px;
+  margin: 0px;
+}
+
+.no-orders-container p {
+  color: #5a5a5a;
+  font-size: 17px;
+  margin-bottom: 12px;
 }
 
 @media (max-width: 800px) {

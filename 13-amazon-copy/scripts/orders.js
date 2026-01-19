@@ -15,9 +15,8 @@ import { formatCurrency } from "./utils/money.js";
     js-cart-quantity, utilize para montar a funcao unica
 */
 function displayCartQuantityOrders() {
-    const cartQuantityOrdersElem = document.querySelector(
-        '.js-cart-quantity'
-    );
+    const cartQuantityOrdersElem = document.querySelector('.js-cart-quantity');
+    console.log(cartQuantityOrdersElem);
     cartQuantityOrdersElem.innerHTML = calculateCartQuantity();
 }
 
@@ -35,8 +34,31 @@ function addedAnimation(orderId, productId) {
     `, 2000);
 }
 
+// noOrdersMessage function
+function noOrdersMessage() {
+    const noOrdersMessage = 
+    `
+        <div class="no-orders-container">
+            <h1>No Orders Found</h1>
+            <p>Looks like you haven’t made a purchase yet. Explore products and place your first order.</p>
+            <a href="amazon.html">Explore Products</a>
+        </div>
+    `
+    return noOrdersMessage;
+}
+
 // generates order page HTML
 async function renderOrdersHTML() {
+    // if no orders were placed yet
+    if (orders.length === 0) {
+        // hiding "Your Orders" text
+        const pageTitleElem = document.querySelector('.page-title');
+        pageTitleElem.style.display = 'none';
+
+        // no orders placed message
+        return noOrdersMessage();
+    }
+
     let ordersSummaryHTML = '';
 
     for (const order of orders) {
@@ -163,53 +185,55 @@ async function renderOrdersHTML() {
     return ordersSummaryHTML;
 }
 
-// generates orders HTML
-const finalHTML = async () => {
-    const response = await renderOrdersHTML();
-    return response;
-}
+// generates orders HTML after header beign loaded
+document.addEventListener('headerLoaded', () => {
+    const finalHTML = async () => {
+        const response = await renderOrdersHTML();
+        return response;
+    }
 
-finalHTML().then((response) => {
-    document.querySelector('.js-orders-grid').innerHTML = response;
+    finalHTML().then((response) => {
+        document.querySelector('.js-orders-grid').innerHTML = response;
 
-    // header cart quantity
-    displayCartQuantityOrders();
-    
-    // Buy it Again buttons
-    const buyItAgainElems = document.querySelectorAll('.js-buy-it-again');
-    buyItAgainElems.forEach((buyItAgainButton) => {
-        buyItAgainButton.addEventListener('click', () => {
-            const orderId = buyItAgainButton.dataset.orderId;
-            const productId = buyItAgainButton.dataset.productId;
-            addedAnimation(orderId, productId);
+        // header cart quantity
+        displayCartQuantityOrders();
+        
+        // Buy it Again buttons
+        const buyItAgainElems = document.querySelectorAll('.js-buy-it-again');
+        buyItAgainElems.forEach((buyItAgainButton) => {
+            buyItAgainButton.addEventListener('click', () => {
+                const orderId = buyItAgainButton.dataset.orderId;
+                const productId = buyItAgainButton.dataset.productId;
+                addedAnimation(orderId, productId);
 
-            const quantity = Number(buyItAgainButton.dataset.quantity);
+                const quantity = Number(buyItAgainButton.dataset.quantity);
 
-            let matchingItem;
-            addToCart(productId, quantity, matchingItem);
+                let matchingItem;
+                addToCart(productId, quantity, matchingItem);
 
-            displayCartQuantityOrders();
+                displayCartQuantityOrders();
+            });
         });
-    });
 
-    // Track Package buttons
-    const trackPackageElems = document.querySelectorAll('.js-track-package');
-    trackPackageElems.forEach((trackPackageButton) => {
-        trackPackageButton.addEventListener('click', () => {
-            // gets product data from HTML element
-            const data = {};
-            data.deliveryDate = trackPackageButton.dataset.deliveryDate;
-            data.productName = trackPackageButton.dataset.productName;
-            data.quantity = trackPackageButton.dataset.quantity;
-            data.imageLink = trackPackageButton.dataset.imageLink;
-            data.progressPercent = trackPackageButton.dataset.progressPercent;
-            data.status = trackPackageButton.dataset.status;
-            
-            // saves at local storage
-            localStorage.setItem('productData', JSON.stringify(data));
+        // Track Package buttons
+        const trackPackageElems = document.querySelectorAll('.js-track-package');
+        trackPackageElems.forEach((trackPackageButton) => {
+            trackPackageButton.addEventListener('click', () => {
+                // gets product data from HTML element
+                const data = {};
+                data.deliveryDate = trackPackageButton.dataset.deliveryDate;
+                data.productName = trackPackageButton.dataset.productName;
+                data.quantity = trackPackageButton.dataset.quantity;
+                data.imageLink = trackPackageButton.dataset.imageLink;
+                data.progressPercent = trackPackageButton.dataset.progressPercent;
+                data.status = trackPackageButton.dataset.status;
+                
+                // saves at local storage
+                localStorage.setItem('productData', JSON.stringify(data));
+            });
         });
-    });
 
-    // dispatch mainLoaded event
-    document.dispatchEvent(new Event('mainLoaded'));
-})
+        // dispatch mainLoaded event
+        document.dispatchEvent(new Event('mainLoaded'));
+    })
+});
