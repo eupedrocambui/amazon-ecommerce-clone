@@ -107,3 +107,25 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 export async function loadCartFetch() {
   await fetch('https://supersimplebackend.dev/cart');
 }
+
+// empty cart message function
+export function emptyCartMessage() {
+  //const pageTitleElem = document.querySelector('.page-title');
+  //const checkoutGridElem = document.querySelector('.checkout-grid');
+  const mainElem = document.querySelector('.main');
+
+  //pageTitleElem.style.display = 'none';
+  //checkoutGridElem.style.display = 'none';
+
+  mainElem.innerHTML = 
+  `
+    <div class="empty-cart-container">
+      <h1>Your Cart is Waiting</h1>
+      <p>Your cart is currently empty. Start shopping to add products.</p>
+      <a href="amazon.html">Find Products</a>
+    </div>
+  `;
+
+  // dispatch mainLoaded event
+  document.dispatchEvent(new Event('mainLoaded'));
+}

@@ -218,3 +218,20 @@ html, body {
 .quantity-input { /* quantity input element (update) */
   width: 30px;
 }
+
+/* empty cart message */
+.empty-cart-container {
+  margin-bottom: 30vh;
+}
+
+.empty-cart-container h1 {
+  color: #2e2e2e;
+  font-size: 30px;
+  margin: 0px;
+}
+
+.empty-cart-container p {
+  color: #5a5a5a;
+  font-size: 17px;
+  margin-bottom: 12px;
+}

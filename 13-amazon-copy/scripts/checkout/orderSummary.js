@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateDeliveryOption, updateItemQuantity } from '../../data/cart.js'; 
+import { cart, emptyCartMessage, removeFromCart, updateDeliveryOption, updateItemQuantity } from '../../data/cart.js'; 
 import { products } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import { calculateDeliveryDate, deliveryOptions } from '../../data/deliveryOptions.js';
@@ -115,6 +115,18 @@ export function renderOrderSummary() {
         return deliverySumary;
     }
 
+    // injecting page structure
+    const mainElem = document.querySelector('.main');
+    mainElem.innerHTML = 
+    `
+    <div class="page-title">Review your order</div>
+
+    <div class="checkout-grid">
+        <div class="order-summary js-summary"></div>
+        <div class="payment-summary js-payment-summary"></div>
+    </div>
+    `;
+
     // display the cart html at checkout page
     document.querySelector('.js-summary').innerHTML = cartSummaryHTML;
 
@@ -123,9 +135,13 @@ export function renderOrderSummary() {
         link.addEventListener('click', () => {
             let productId = link.dataset.productId;
             removeFromCart(productId);
-            renderOrderSummary();
             renderCheckoutHeader();
-            renderPaymentSummary();
+            if (cart.length === 0) {
+                emptyCartMessage();
+            } else {
+                renderOrderSummary();
+                renderPaymentSummary();
+            }
         })
     });
 

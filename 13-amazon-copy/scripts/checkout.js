@@ -2,7 +2,7 @@ import { renderCheckoutHeader } from "./checkout/checkoutHeader.js";
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { loadProductsFetch } from "../data/products.js";
-import { loadCartFetch } from "../data/cart.js";
+import { cart, emptyCartMessage, loadCartFetch } from "../data/cart.js";
 
 async function loadPage() {
     await Promise.all([
@@ -12,6 +12,12 @@ async function loadPage() {
     
     // displays header checkout cart quantity when the page is started
     renderCheckoutHeader();
+
+    // empty cart message
+    if (cart.length === 0) {
+        emptyCartMessage();
+        return;
+    }
 
     // renders order summary (items in checkout page)
     renderOrderSummary();
