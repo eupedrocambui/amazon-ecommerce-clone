@@ -3,7 +3,7 @@ import { products } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import { calculateDeliveryDate, deliveryOptions } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
-import { renderCheckoutHeader } from './checkoutHeader.js';
+import { checkoutMiddleSection } from './headerMiddleSection.js';
 
 // renders order summary (items in checkout page)
 export function renderOrderSummary() {
@@ -135,7 +135,7 @@ export function renderOrderSummary() {
         link.addEventListener('click', () => {
             let productId = link.dataset.productId;
             removeFromCart(productId);
-            renderCheckoutHeader();
+            checkoutMiddleSection();
             if (cart.length === 0) {
                 emptyCartMessage();
             } else {
@@ -167,7 +167,7 @@ export function renderOrderSummary() {
                 if (newQuantity > 0 && newQuantity < 1000) {
                     let quantityLabelElem = document.querySelector('.quantity-label');
                     updateItemQuantity(productId, newQuantity); // updates the cart item quantity
-                    renderCheckoutHeader();
+                    checkoutMiddleSection();
                     renderOrderSummary(); 
                     renderPaymentSummary(); 
                     quantityLabelElem.innerHTML = newQuantity;
@@ -189,7 +189,7 @@ export function renderOrderSummary() {
                     if (newQuantity > 0 && newQuantity < 1000) {
                         let quantityLabelElem = document.querySelector('.quantity-label');
                         updateItemQuantity(productId, newQuantity);
-                        renderCheckoutHeader();
+                        checkoutMiddleSection();
                         quantityLabelElem.innerHTML = newQuantity;
                         link.innerHTML = 'Update';
                         document.querySelector('.js-input-quantity-update').innerHTML = '';
