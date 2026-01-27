@@ -1,0 +1,238 @@
+import { addToCart, displayCartQuantity } from "../data/cart.js";
+import { orders } from "../data/orders.js";
+import { loadProductsFetch, products } from "../data/products.js";
+import { calculateProgressPercent, getTodayDate } from "./utils/trackingUtils.js";
+import { addBusinessDays } from "./utils/addBusinessDays.js";
+import { findGap } from "./utils/findGapDate.js";
+import { findMatchingProduct } from "./utils/findMatchingProduct.js";
+import { formatDate, formatDate2, formatDate3, formatDate4 } from "./utils/formatDate.js";
+import { formatCurrency } from "./utils/money.js";
+import { mainLoaded } from "./events/events.js";
+import { searchBar } from "./utils/searchBar.js";
+
+// added animation when clicking buy it again
+function addedAnimation(orderId, productId) {
+    let addedElem = document.querySelector(`.js-buy-it-again-${orderId}-${productId}`);
+    addedElem.innerHTML = 'Added';
+
+    if (addedElem.timeoutId) {
+      clearTimeout(addedElem.timeoutId);
+    }
+    addedElem.timeoutId = setTimeout(() => addedElem.innerHTML = `
+        <img class="buy-again-icon" src="images/icons/buy-again.png">
+        <span class="buy-again-message">Buy it again</span>
+    `, 2000);
+}
+
+// when user haven't placed any order yet
+function noOrdersMessage() {
+    mainLoaded();
+    return `
+        <div class="no-orders-container">
+            <h1>No Orders Found</h1>
+            <p>Looks like you haven’t made a purchase yet. Explore products and place your first order.</p>
+            <a href="index.html">Explore Products</a>
+        </div>
+    `;
+}
+
+// generates order page HTML
+async function renderOrdersHTML() {
+    // if no orders were placed yet
+    if (orders.length === 0) {
+        return noOrdersMessage();
+    }
+
+    let ordersSummaryHTML = '';
+
+    for (const order of orders) {
+        // getting order data
+        const orderId = order.id;
+        const orderTime = formatDate(order.orderTime);
+        const totalCostCents = order.totalCostCents;
+        const orderProducts = order.products;
+        
+        const productsHTML = await getProductsGridHTML(orderProducts, orderId, order.orderTime);
+       
+        ordersSummaryHTML += 
+        `
+        <div class="order-container">
+            <div class="order-header">
+                <div class="order-header-left-section">
+                <div class="order-date">
+                    <div class="order-header-label">Order Placed:</div>
+                    <div>${orderTime}</div>
+                </div>
+                <div class="order-total">
+                    <div class="order-header-label">Total:</div>
+                    <div>$${formatCurrency(totalCostCents)}</div>
+                </div>
+                </div>
+
+                <div class="order-header-right-section">
+                <div class="order-header-label">Order ID:</div>
+                <div>${orderId}</div>
+                </div>
+            </div>
+
+            <div class="order-details-grid">
+                ${productsHTML}
+            </div>
+            </div>
+        `;
+    }
+
+    // generates orders products HTML
+    async function getProductsGridHTML(orderProducts, orderId, orderTime) {
+        await loadProductsFetch();
+
+        let productsGridHtml = '';
+        
+        orderProducts.forEach((product) => {
+            const productId = product.productId;
+            const quantity = product.quantity;
+            
+            // original delivery date (counting weekend days)
+            const estimatedDeliveryTime = formatDate2(product.estimatedDeliveryTime); // 2025-11-12 format
+
+            const dateGap = findGap(orderTime, estimatedDeliveryTime);
+
+            // final delivery date (only business days)
+            const deliveryDate = addBusinessDays(orderTime, dateGap); // 2025-11-12 format
+            const finalDeliveryDate = formatDate3(deliveryDate); // November, 12 format
+
+            const matchingProduct = findMatchingProduct(productId, products);
+            const productImageLink = matchingProduct.image;
+            const productName = matchingProduct.name;
+
+            // calculating delivery percent progress
+            const today = getTodayDate();
+            const progressPercent = calculateProgressPercent(
+                today, orderTime, deliveryDate
+            );
+            
+            // calculating status (1 0-50% | 2 51-99% | 3 >=100%)
+            const status = 
+                (progressPercent >= 0 && progressPercent <= 50) ? 1 :
+                (progressPercent > 50 && progressPercent <= 99) ? 2 :
+                3;
+
+            productsGridHtml+=
+            `
+            <div class="product-image-container">
+                <img src="${productImageLink}">
+                    </div>
+
+                    <div class="product-details">
+                    <div class="product-name">
+                        ${productName}
+                    </div>
+                    <div class="product-delivery-date">
+                        Arriving on: ${finalDeliveryDate}
+                    </div>
+                    <div class="product-quantity">
+                        Quantity: ${quantity}
+                    </div>
+                    <button class="buy-again-button button-primary js-buy-it-again
+                    js-buy-it-again-${orderId}-${productId}"
+
+                    data-product-id="${productId}"
+                    data-quantity="${quantity}"
+                    data-order-id="${orderId}">
+                        <img class="buy-again-icon" src="images/icons/buy-again.png">
+                        <span class="buy-again-message">Buy it again</span>
+                    </button>
+                    </div>
+
+                    <div class="product-actions">
+                    <a href="tracking.html">
+                        <button class="track-package-button button-secondary
+                        js-track-package"
+                        
+                        data-delivery-date="${formatDate4(deliveryDate)}"
+                        data-product-name="${productName}"
+                        data-quantity="${quantity}"
+                        data-image-link="${productImageLink}"
+                        data-progress-percent="${progressPercent}"
+                        data-status="${status}"
+                        >
+                        Track package
+                        </button>
+                    </a>
+                    </div>
+            `;
+        })
+
+        return productsGridHtml;
+    }
+
+    return ordersSummaryHTML;
+}
+
+// orders final HTML
+const finalHTML = async () => {
+    const response = await renderOrdersHTML();
+    return response;
+}
+
+finalHTML().then((response) => {
+    // injecting page structure
+    if (orders.length === 0) {
+        // "no orders placed" message
+        document.querySelector('.main').innerHTML = response;
+    } else {
+        // main structure
+        document.querySelector('.main').innerHTML = 
+        `
+            <div class="page-title">Your Orders</div>
+            <div class="orders-grid js-orders-grid"></div>
+        `;
+
+        // injecting orders grid HTML
+        document.querySelector('.js-orders-grid').innerHTML = response;
+    }
+    
+    // header cart quantity
+    displayCartQuantity();
+    
+    // "Buy it Again" buttons
+    const buyItAgainElems = document.querySelectorAll('.js-buy-it-again');
+    buyItAgainElems.forEach((buyItAgainButton) => {
+        buyItAgainButton.addEventListener('click', () => {
+            const orderId = buyItAgainButton.dataset.orderId;
+            const productId = buyItAgainButton.dataset.productId;
+            addedAnimation(orderId, productId);
+
+            const quantity = Number(buyItAgainButton.dataset.quantity);
+
+            let matchingItem;
+            addToCart(productId, quantity, matchingItem);
+
+            displayCartQuantity();
+        });
+    });
+
+    // "Track Package" buttons
+    const trackPackageElems = document.querySelectorAll('.js-track-package');
+    trackPackageElems.forEach((trackPackageButton) => {
+        trackPackageButton.addEventListener('click', () => {
+            // getting product data from "Track Package" HTML element
+            const data = {};
+            data.deliveryDate = trackPackageButton.dataset.deliveryDate;
+            data.productName = trackPackageButton.dataset.productName;
+            data.quantity = trackPackageButton.dataset.quantity;
+            data.imageLink = trackPackageButton.dataset.imageLink;
+            data.progressPercent = trackPackageButton.dataset.progressPercent;
+            data.status = trackPackageButton.dataset.status;
+            
+            // saving in local storage (will be used on tracking page)
+            localStorage.setItem('productData', JSON.stringify(data));
+        });
+    });
+    
+    // interactive search bar
+    searchBar();
+
+    // dispatch mainLoaded event
+    mainLoaded();
+});
