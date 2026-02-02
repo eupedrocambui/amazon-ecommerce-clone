@@ -1,4 +1,4 @@
-import { calculateProgressPercent } from "../../scripts/tracking.js";
+import { calculateProgressPercent } from "../../scripts/utils/trackingUtils.js";
 
 describe('test suite: calculateProgressPercent', () => {
     // function parameters -> currentTimeOg, orderTimeOg, deliveryTimeOg

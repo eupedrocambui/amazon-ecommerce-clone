@@ -5,7 +5,7 @@ import { calculateDeliveryDate, deliveryOptions } from '../../data/deliveryOptio
 import { renderPaymentSummary } from './paymentSummary.js';
 import { checkoutMiddleSection } from './headerMiddleSection.js';
 
-// renders order summary (items in checkout page)
+// renders order summary (items on checkout page)
 export function renderOrderSummary() {
     let cartSummaryHTML = '';
     cart.forEach((cartItem) => {

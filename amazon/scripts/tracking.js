@@ -2,6 +2,11 @@ import { displayCartQuantity } from "../data/cart.js";
 import { mainLoaded } from "./events/events.js";
 import { searchBar } from "./utils/searchBar.js";
 
+/*
+  progress percent is calculated on orders.js using calculateProgressPercent
+  function (from trackingUtils.js) and placed in progress bar HTML element
+  using dataset
+*/
 function progressBar() {
   const progressBarElem = document.querySelector('.progress-bar');
   let progressPercent = progressBarElem.dataset.progressPercent;
