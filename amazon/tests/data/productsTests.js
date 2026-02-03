@@ -22,9 +22,10 @@ describe('test suite: class Product', () => {
             });
     });
 
-    it('creates the object properly (properties correct)', () => {
-        
+    it('creates the object properly', () => {
+        // checking properties
         expect(productExemple.id).toEqual("id1");
+        expect(productExemple.image).toEqual("images/products/backpack.jpg")
         expect(productExemple.name).toEqual("Backpack");
     });
 
@@ -37,6 +38,7 @@ describe('test suite: class Product', () => {
 
 describe('test suite: class Clothing', () => {
     let productExemple;
+
     beforeEach(() => {
         productExemple = new Clothing(
             {
@@ -58,7 +60,8 @@ describe('test suite: class Clothing', () => {
             });
     });
 
-    it('creates the object properly (properties correct)', () => {
+    it('creates the object properly', () => {
+        // checking properties
         expect(productExemple.id).toEqual('83d4ca15-0f35-48f5-b7a3-1ea210004f2e');
         expect(productExemple.name).toEqual('Adults Plain Cotton T-Shirt - 2 Pack');
         expect(productExemple.sizeChartLink).toEqual('images/clothing-size-chart.png');
@@ -96,21 +99,13 @@ describe('test suite: class Appliance', () => {
             });
     });
 
-    it('creates the object properly (properties correct)', () => {
+    it('creates the object properly', () => {
+        // checking properties
         expect(productExemple.id).toEqual('c2a82c5e-aff4-435f-9975-517cfaba2ece');
         expect(productExemple.type).toEqual('appliance');
-
-        expect(
-            productExemple.name
-        ).toEqual('Electric Glass and Steel Hot Tea Water Kettle - 1.7-Liter');
-
-        expect(
-            productExemple.instructionsLink
-        ).toEqual('../images/appliance-instructions.png');
-
-        expect(
-            productExemple.warrantyLink
-        ).toEqual('../images/appliance-warranty.png');
+        expect(productExemple.name).toEqual('Electric Glass and Steel Hot Tea Water Kettle - 1.7-Liter');
+        expect(productExemple.instructionsLink).toEqual('../images/appliance-instructions.png');
+        expect(productExemple.warrantyLink).toEqual('../images/appliance-warranty.png');
     });
 
     it('runs all methods properly', () => {
