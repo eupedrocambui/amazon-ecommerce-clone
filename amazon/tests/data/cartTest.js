@@ -25,7 +25,8 @@ describe('test suite: addToCart', () => {
                 productId: 'id1',
                 quantity: 1,
                 deliveryOptionId: "1"
-            }]));
+            }]
+        ));
     });
 
     it('adds quantity for an existent cart product', () => {
@@ -93,25 +94,20 @@ describe('test suite: removeFromCart', () => {
     it('removes a product that is not in the cart', () => {
         const response = removeFromCart('idNotExistent');
 
+        // checking if error handling works
         expect(response).toBe('invalid productId');
+
+        // checking cart
         expect(cart[0].productId).toEqual(productId1);
         expect(cart[1].productId).toEqual(productId2);
-        expect(localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify([
-            {deliveryOptionId: "1",
-            productId: "id1",
-            quantity: 1
-            }, {deliveryOptionId: "2",
-            productId: "id2",
-            quantity: 3
-            }]
-        ));
     });
 });
 
-describe('test suite: updateDeliveryOption', () => {
+describe('test suite: updateDeliveryOption (function)', () => {
     beforeEach(() => {
+        // replacing setItem and getItem with spy 
         spyOn(localStorage, 'setItem');
-        spyOn(localStorage, 'getItem').and.callFake(() => {
+        spyOn(localStorage, 'getItem').and.callFake(() => {  // fake cart with 2 products
             return JSON.stringify([
                 {deliveryOptionId: "1",
                 productId: 'id1',
@@ -127,7 +123,10 @@ describe('test suite: updateDeliveryOption', () => {
     it('updates the delivery option', () => {
         updateDeliveryOption('id1', '3');
 
+        // checking cart
         expect(cart[0].deliveryOptionId).toEqual('3');
+
+        // checking delivery option change
         expect(localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify([
                 {deliveryOptionId: "3",
                 productId: 'id1',
@@ -139,10 +138,16 @@ describe('test suite: updateDeliveryOption', () => {
         );
     });
 
-    it('doesnt call saveToStorage if the product is not in the cart', () => {
-        updateDeliveryOption('idNotExistent', '2');
+    it("doesn't call saveToStorage with invalid productId", () => {
+        const response = updateDeliveryOption('idNotExistent', '2');
 
+        // checking if error handling works (invalid productId)
+        expect(response).toBe('invalid productId');
+
+        // checking setItem
         expect(localStorage.setItem).toHaveBeenCalledTimes(0);
+
+        // checking final cart
         expect(JSON.stringify(cart)).toEqual(JSON.stringify([
                 {deliveryOptionId: "1",
                 productId: 'id1',

@@ -66,18 +66,18 @@ export function addToCart(productId, selectQuantity) {
 // remove products after clicking "delete" button on checkout page
 export function removeFromCart(productId) {
   let newCart = [];
+  let productsCount = 0;
   
   cart.forEach((cartItem) => {
     if (cartItem.productId !== productId) {
       newCart.push(cartItem);
+      productsCount++;
     }
   })
-  console.log(cart);
-  console.log(newCart);
   
   // error handling (invalid productId)
-  if (cart === newCart) {
-    return 0;
+  if (productsCount === cart.length) {
+    return 'invalid productId';
   }
 
   cart = newCart;
@@ -86,18 +86,21 @@ export function removeFromCart(productId) {
 
 // changes the delivery option in checkout (radio input)
 export function updateDeliveryOption(productId, deliveryOptionId) {
-  // verifying if productId doesn't exist in cart
-  let counter = 0;
+  // error handling (invalid productId)
+  let productsCount = 0;
+
   cart.forEach((item) => {
     if (productId !== item.productId) {
-        counter++;
+        productsCount++;
       }
   });
-  if (counter === cart.length) {
-    return
+
+  if (productsCount === cart.length) {
+    return 'invalid productId';
   }
 
   let matchingItem;
+
   cart.forEach((item) => { 
       if (productId === item.productId) { // matching item verifier
         matchingItem = item;
