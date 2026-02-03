@@ -66,12 +66,19 @@ export function addToCart(productId, selectQuantity) {
 // remove products after clicking "delete" button on checkout page
 export function removeFromCart(productId) {
   let newCart = [];
-
+  
   cart.forEach((cartItem) => {
     if (cartItem.productId !== productId) {
       newCart.push(cartItem);
     }
   })
+  console.log(cart);
+  console.log(newCart);
+  
+  // error handling (invalid productId)
+  if (cart === newCart) {
+    return 0;
+  }
 
   cart = newCart;
   saveToStorage();
