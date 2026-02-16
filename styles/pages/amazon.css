@@ -146,7 +146,7 @@ html, body {  /* removing horizontal scrollbar*/
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 35vh;
+  margin-bottom: 45vh;
 }
 
 .not-found-container h1 {

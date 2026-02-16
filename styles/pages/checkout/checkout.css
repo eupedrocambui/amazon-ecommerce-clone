@@ -187,7 +187,7 @@ html, body {  /* removing horizontal scrollbar*/
 
 /* empty cart message */
 .empty-cart-container {
-  margin-bottom: 30vh;
+  margin-bottom: 45vh;
 }
 
 .empty-cart-container h1 {

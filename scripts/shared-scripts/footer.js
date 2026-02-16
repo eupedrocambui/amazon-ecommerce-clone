@@ -42,7 +42,7 @@ const footerHTML =
 
         <div class="logo-language">
             <a href="./index.html">
-                <img class="amazon-logo-footer" src="../amazon/images/amazon-logo-white.png" alt="Amazon Logo">
+                <img class="amazon-logo-footer" src="./images/amazon-logo-white.png" alt="Amazon Logo">
             </a>
             <div class="language">
                 <img class="flag" src="https://flagicons.lipis.dev/flags/4x3/us.svg" alt="US Flag">
