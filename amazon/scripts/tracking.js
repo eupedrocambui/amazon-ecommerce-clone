@@ -7,15 +7,16 @@ import { searchBar } from "./utils/searchBar.js";
   function (from trackingUtils.js) and placed in progress bar HTML element
   using dataset
 */
-function progressBar() {
+export function progressBar() {
   const progressBarElem = document.querySelector('.progress-bar');
-  let progressPercent = progressBarElem.dataset.progressPercent;
+  const progressPercent = progressBarElem.dataset.progressPercent;
   progressBarElem.style.width = `${progressPercent}%`;
 }
 
-function renderTrackingHTML() {
+export function renderTrackingHTML() {
   // getting productData from local storage
   const productData = JSON.parse(localStorage.getItem('productData'));
+  console.log(productData);
   
   // destructuring productData
   const { deliveryDate, productName, quantity, imageLink, progressPercent, status } = productData;
@@ -62,17 +63,20 @@ function renderTrackingHTML() {
 }
 
 // tracking page HTML
-const finalHTML = renderTrackingHTML();
-document.querySelector('.order-tracking').innerHTML = finalHTML;
+const container = document.querySelector('.order-tracking');
 
-// setting progress bar width
-progressBar();
+if (container) {
+  container.innerHTML = renderTrackingHTML();
 
-// refreshing cart quantity
-displayCartQuantity();
+  // setting progress bar width
+  progressBar();
 
-// interactive search bar
-searchBar();
+  // refreshing cart quantity
+  displayCartQuantity();
 
-// dispatch mainLoaded event
-mainLoaded();
+  // interactive search bar
+  searchBar();
+
+  // dispatch mainLoaded event
+  mainLoaded();
+}
