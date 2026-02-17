@@ -1,15 +1,21 @@
-html, body {  /* removing horizontal scrollbar */
-  overflow-x: hidden;
+html, body {  
+  overflow-x: hidden;  /* removing horizontal scrollbar */
+  height: 100%;
+  margin: 0;
+}
+
+/* fixing footer placement */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .main {
+  flex: 1;
   max-width: 850px;
-  margin-top: 40px;
-  margin-bottom: 100px;
-  padding-left: 30px;
-  padding-right: 30px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 0px 30px 0px 30px;
+  margin: 40px auto 100px auto;
 }
 
 .back-to-orders-link {
@@ -77,4 +83,8 @@ html, body {  /* removing horizontal scrollbar */
   background-color: green;
   border-radius: 50px;
   width: 50%;
+}
+
+.order-tracking {
+  width: 50vw;
 }

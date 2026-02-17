@@ -1,17 +1,21 @@
-html, body {  /* removing horizontal scrollbar*/
-  overflow-x: hidden;
+html, body {  
+  overflow-x: hidden;  /* removing horizontal scrollbar*/
+  height: 100%;
+  margin: 0;
+}
+
+/* fixing footer placement */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .main {
+  flex: 1;  /* fixing footer placement */
   max-width: 1100px;
-  padding-left: 30px;
-  padding-right: 30px;
-
-  margin-top: 140px;
-  margin-bottom: 100px;
-
-  margin-left: auto;
-  margin-right: auto;
+  padding: 0px 30px 0px 30px;
+  margin: 140px auto 30px auto;
 }
 
 .page-title {
@@ -187,7 +191,7 @@ html, body {  /* removing horizontal scrollbar*/
 
 /* empty cart message */
 .empty-cart-container {
-  margin-bottom: 45vh;
+  margin-right: 25vw;;
 }
 
 .empty-cart-container h1 {
