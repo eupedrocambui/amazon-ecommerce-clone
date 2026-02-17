@@ -1,13 +1,15 @@
 # Amazon E-commerce Clone
 
-Amazon E-commerce Clone is a frontend project that replicates key pages and functionality of a simplified Amazon website using HTML, CSS, and JavaScript.
-This clone focuses on UI structure, responsiveness, and layout of essential e-commerce screens including Order History, Checkout, and Tracking pages.
+Amazon E-commerce Clone is a project that replicates key pages and functionality of a simplified Amazon website using HTML, CSS, and JavaScript
+This clone focuses on UI structure, responsiveness, and layout of essential e-commerce screens including Order History, Checkout, and Tracking pages
+
+Check the project: https://eupedrocambui.github.io/amazon-ecommerce-clone/
 
 # Project Purpose
-The main goal of this project was to improve my JavaScript skills by applying them in a real-world e-commerce simulation.
-This project was developed as part of the JavaScript course by @SuperSimpleDev on YouTube, where I focused on learning JavaScript from the basics to advanced skills.
+The main goal of this project was to improve my JavaScript skills by applying them in a real-world e-commerce simulation
+This project was developed as part of the JavaScript course by @SuperSimpleDev on YouTube, where I focused on learning JavaScript from the basics to advanced skills
 
-Another objective of this project was to keep improving my English proficiency by taking contact with technical content and writing code in English.
+Another objective of this project was to keep improving my English proficiency by taking contact with technical content and writing code in English
 
 # Features
 
@@ -23,41 +25,44 @@ Three core pages with realistic UI:
 - Git & GitHub
 
 # Main Concepts Practiced
-### - MVC Architecture
+### JavaScript Practice
+This project was built almost entirely using JavaScript, with most of the application logic, rendering, and interactivity handled directly through JS
 
-This project was developed following the MVC (Model–View–Controller) architectural pattern, even though it is a frontend-only application.
+Main JavaScript practices included:
 
-Model → Responsible for handling data
+- HTTP Requests using ```fetch()```
+- Request Methods (```GET```, ```POST```)
+- Asynchronous Operations with ```async / await``` and ```try / catch```
+- Promises and Multiple Promises Handling (```Promise.all```)
+- Array methods (```map```, ```filter```, ```reduce```)
+- Object-Oriented Programming (OOP) with JavaScript Classes
+- DOM Manipulation and Dynamic Rendering
+- URL Parameters
+- ES6 Modules
+- Writing clean, modular, and testable code
 
-View → HTML structure and dynamic rendering in the browser
+<br>
 
-Controller → JavaScript logic that connects the data (Model) to the UI (View)
+### MVC Architecture
 
-### - Unit Testing with Jasmine
+This project was developed following the MVC (Model–View–Controller) architectural pattern
 
-Unit tests were implemented using the Jasmine testing framework.
+- Model → Responsible for handling data
+- View → HTML structure and dynamic rendering in the browser
+- Controller → JavaScript logic that connects the data (Model) to the UI (View)
 
-Tests were written to validate business logic functions, data manipulation and expected outputs from core JavaScript modules
+<br>
 
-# Additional Concepts Practiced
+### Unit Testing with Jasmine Framework
 
-Object-Oriented Programming (OOP) with JavaScript Classes
+This project includes unit tests written with Jasmine to validate logic and increase code reliability
 
-Array Methods (map, filter)
-
-Component-Based Structure
-
-Event Handling
-
-Responsive Design
-
-Git Version Control
-
-GitHub Pages Deployment
-
-Code Organization Best Practices
-
-File Structure Organization
+During tests development, I practiced:
+- Test Suites with ```describe()```
+- Individual Test Cases with ```it()```
+- Assertions with ```expect()```
+- Jasmine Hooks (```beforeEach()```, ```afterEach()```, ```beforeAll()```, ```afterAll()```)
+- Spies with ```spyOn()```
 
 # How to Run the Project Locally
 
@@ -75,7 +80,7 @@ cd amazon-ecommerce-clone
 
 4- Open ```tests/tests.html``` file in your web browser to run Jasmine tests
 
-## File Structure
+# File Structure
 
 ```
 amazon-ecommerce-clone/                 # Main project folder
