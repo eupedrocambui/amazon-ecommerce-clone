@@ -34,7 +34,7 @@ Main JavaScript practices included:
 - Request Methods (```GET```, ```POST```)
 - Asynchronous Operations with ```async / await``` and ```try / catch```
 - Promises and Multiple Promises Handling (```Promise.all```)
-- Array methods (```map```, ```filter```, ```reduce```)
+- Array Methods (```map```, ```filter```, ```reduce```)
 - Object-Oriented Programming (OOP) with JavaScript Classes
 - DOM Manipulation and Dynamic Rendering
 - URL Parameters
